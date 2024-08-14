@@ -14,11 +14,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.dag.myapplication.MainActivity
 import com.dag.myapplication.composebase.BlockSurface
 import com.dag.myapplication.composebase.appbar.CustomAppbar
 import com.dag.myapplication.composebase.bottomnavigation.CustomBottomNavigation
-import com.dag.myapplication.home.ui.HomeVM
-import com.dag.myapplication.home.ui.HomeView
+import com.dag.myapplication.ui.features.home.ui.HomeVM
+import com.dag.myapplication.ui.features.home.ui.HomeView
+import com.dag.myapplication.ui.features.passkey.ui.PasskeyVM
+import com.dag.myapplication.ui.features.passkey.ui.PasskeyView
 
 import com.solana.mobilewalletadapter.clientlib.ActivityResultSender
 
@@ -65,13 +68,17 @@ fun NavGraph(
                     viewModel = viewModel
                 )
             }
+            composable(NavScreen.PasskeyScreen.route) {
+                val viewModel = hiltViewModel<PasskeyVM>()
+                PasskeyView(
+                    viewModel = viewModel
+                )
+            }
+            composable(NavScreen.MainActivity.route) {
+                MainActivity()
+            }
+
 
         }
     }
-}
-
-fun NavHostController.navigateAndReplaceStartRoute(newHomeRoute: String, popStackRoute: String) {
-    popBackStack(popStackRoute, true)
-    graph.setStartDestination(newHomeRoute)
-    navigate(newHomeRoute)
 }
